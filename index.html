@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hangman Тоглоом</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Hangman Тоглоом</h1>
+        <p id="word"></p>
+        <div id="wrong-letters"></div>
+        <p>Үсгээ сонгоно уу:</p>
+        <input type="text" id="letter-input" maxlength="1">
+        <button onclick="usegshalgah()">Таах</button>
+        <p id="message"></p>
+        <canvas id="hangman" width="300" height="350"></canvas>
+        <button onclick="resetGame()">Дахин тоглох</button>
+    </div>
+    <script>
+        const ugnuud = ["монгол", "тоглоом", "хөгжил", "компьютер", "сайт", "хайртай", "хөөрхөн", "аав", "ээж"];
+
+        let ugsongoh = ugnuud[Math.floor(Math.random() * ugnuud.length)];
+        let taasanuseg = [];
+        let taagaagui = [];
+        let ami = 5;
+
+        const ugElement = document.getElementById('word');
+        const buruuElement = document.getElementById('wrong-letters');
+        const messageElement = document.getElementById('message');
+        const letterInput = document.getElementById('letter-input');
+        const hangmanCanvas = document.getElementById('hangman').getContext('2d');
+
+        function ugharuulah() {
+            ugElement.innerHTML = ugsongoh.split('').map(letter => 
+                taasanuseg.includes(letter) ? letter : "_"
+            ).join(' ');
+        }
+
+        function buruuuseg() {
+            buruuElement.innerHTML = "Буруу үсэг: " + taagaagui.join(', ');
+            drawHangman();
+        }
+        
+        function drawBase() {
+            hangmanCanvas.beginPath();
+            hangmanCanvas.moveTo(50, 230);
+            hangmanCanvas.lineTo(150, 230);
+            hangmanCanvas.moveTo(100, 230);
+            hangmanCanvas.lineTo(100, 20);
+            hangmanCanvas.lineTo(160, 20); 
+            hangmanCanvas.lineTo(160, 40);
+            hangmanCanvas.stroke();
+        }
+
+        function drawHead() {
+            hangmanCanvas.beginPath();
+            hangmanCanvas.arc(160, 60, 20, 0, Math.PI * 2);
+            hangmanCanvas.stroke();
+        }
+
+        function drawBody() {
+            hangmanCanvas.beginPath();
+            hangmanCanvas.moveTo(160, 80);
+            hangmanCanvas.lineTo(160, 140);
+            hangmanCanvas.stroke();
+        }
+
+        function drawLeftArm() {
+            hangmanCanvas.beginPath();
+            hangmanCanvas.moveTo(160, 100);
+            hangmanCanvas.lineTo(130, 120);
+            hangmanCanvas.stroke();
+        }
+
+        function drawRightArm() {
+            hangmanCanvas.beginPath();
+            hangmanCanvas.moveTo(160, 100);
+            hangmanCanvas.lineTo(190, 120);
+            hangmanCanvas.stroke();
+        }
+
+        function drawLeftLeg() {
+            hangmanCanvas.beginPath();
+            hangmanCanvas.moveTo(160, 140);
+            hangmanCanvas.lineTo(140, 180);
+            hangmanCanvas.stroke();
+        }
+
+        function drawRightLeg() {
+            hangmanCanvas.beginPath();
+            hangmanCanvas.moveTo(160, 140);
+            hangmanCanvas.lineTo(180, 180);
+            hangmanCanvas.stroke();
+        }
+
+        const parts = [drawHead, drawBody, drawLeftArm, drawRightArm, drawLeftLeg, drawRightLeg];
+
+        function drawHangman() {
+            if (taagaagui.length > 0 && taagaagui.length <= parts.length) {
+                parts[taagaagui.length - 1]?.();
+            }
+        }
+
+        function usegshalgah() {
+            const urt = letterInput.value.toLowerCase();
+            if (!urt) return;
+
+            if (taasanuseg.includes(urt) || taagaagui.includes(urt)) {
+                messageElement.textContent = "Үсэг давтагдсан байна!";
+                return;
+            }
+
+            if (ugsongoh.includes(urt)) {
+                taasanuseg.push(urt);
+            } else {
+                taagaagui.push(urt);
+                ami--;
+            }
+
+            letterInput.value = '';
+            messageElement.textContent = '';
+            ugharuulah();
+            buruuuseg();
+
+            if (!ugElement.textContent.includes('_')) {
+                messageElement.textContent = "Та яллаа!";
+            } else if (ami === 0) {
+                messageElement.textContent = "Та ялагдлаа! Үг нь: " + ugsongoh;
+            }
+        }
+
+        function resetGame() {
+            taasanuseg = [];
+            taagaagui = [];
+            ami = 5;
+            ugsongoh = ugnuud[Math.floor(Math.random() * ugnuud.length)];
+            hangmanCanvas.clearRect(0, 0, 200, 200); 
+            drawBase(); 
+            ugharuulah();
+            buruuuseg();
+        }
+
+        drawBase();
+        ugharuulah();
+    </script>
+</body>
+</html>
