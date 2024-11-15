@@ -9,13 +9,14 @@
 <body>
     <div class="container">
         <h1>Hangman Тоглоом</h1>
+        <p id="lives">Амь: 5</p>
         <p id="word"></p>
         <div id="wrong-letters"></div>
         <p>Үсгээ сонгоно уу:</p>
         <input type="text" id="letter-input" maxlength="1">
         <button onclick="usegshalgah()">Таах</button>
         <p id="message"></p>
-        <canvas id="hangman" width="300" height="350"></canvas>
+        <canvas id="hangman" width="300" height="300"></canvas>
         <button onclick="resetGame()">Дахин тоглох</button>
     </div>
     <script>
@@ -94,6 +95,10 @@
             hangmanCanvas.lineTo(180, 180);
             hangmanCanvas.stroke();
         }
+        function updateLives() {
+            const livesElement = document.getElementById('lives');
+            livesElement.textContent = "Амь: " + ami;
+        }
 
         const parts = [drawHead, drawBody, drawLeftArm, drawRightArm, drawLeftLeg, drawRightLeg];
 
@@ -123,6 +128,7 @@
             messageElement.textContent = '';
             ugharuulah();
             buruuuseg();
+            updateLives(); 
 
             if (!ugElement.textContent.includes('_')) {
                 messageElement.textContent = "Та яллаа!";
@@ -140,6 +146,7 @@
             drawBase(); 
             ugharuulah();
             buruuuseg();
+            updateLives(); 
         }
 
         drawBase();

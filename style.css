@@ -11,10 +11,10 @@ body {
 
 .container {
     text-align: center;
-    background-color: rgba(255, 231, 171, 0.95);
+    background: linear-gradient(to right, rgba(255, 241, 207, 0.95), rgba(255, 224, 145, 0.95), rgba(255, 234, 181, 0.95));
     padding: 30px 40px;
     border-radius: 20px;
-    box-shadow: 0 8px 20px rgba(255, 165, 0, 0.5);
+    box-shadow: 0 8px 20px rgb(255, 255, 255);
     max-width: 600px;
     width: 90%;
     transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
@@ -22,11 +22,12 @@ body {
 
 .container:hover {
     transform: translateY(-8px);
-    background-color: #ffeb3b;
+    background: linear-gradient(to right, #fff493, #ffef5c,#fff6a4);
+    box-shadow: 0 20px 40px rgb(255, 0, 0);
 }
 
 h1 {
-    color: #e95858;
+    color: #ffffff;
     font-size: 36px;
     font-weight: 1000;
     margin-bottom: 20px;
@@ -39,7 +40,12 @@ h1 {
 h1:hover {
     color: #ff4081;
 }
-
+#lives {
+    color: rgb(255, 5, 5);
+    font-size: 30px;
+    text-shadow: 0 10px 20px rgb(131, 155, 255); 
+    font-weight: bold;
+}
 #word {
     font-size: 35px;
     font-weight: bold;
@@ -55,7 +61,10 @@ h1:hover {
     font-weight: 600;
     font-size: 18px;
 }
-
+p {
+    font-size: 17px;
+    font-weight: bold;
+}
 input {
     padding: 10px;
     font-size: 25px;
@@ -77,9 +86,11 @@ input:focus {
 button {
     margin-top: 20px;
     padding: 12px 25px;
-    background-color: #ff5722;
+    background-color: #df4719;
     color: #fff;
-    font-size: 1.1rem;
+    text-shadow: 0 10px 20px rgb(238, 255, 46);
+    font-weight: bold;
+    font-size: 20px;
     border: none;
     border-radius: 10px;
     cursor: pointer;
@@ -111,6 +122,11 @@ canvas {
     border-radius: 10px;
     margin-top: 20px;
     background-color: #fff;
+    box-shadow: 0px 10px 20px rgb(255, 0, 0);
+}
+canvas:focus {
+    border: 3px dashed #ffbbbb;
+    background-color: #fff9f9;
 }
 @media (max-width: 768px) {
     .container {
@@ -122,27 +138,27 @@ canvas {
     }
 
     #word {
-        font-size: 2rem;
+        font-size: 30px;
     }
 
     button {
-        font-size: 1rem;
+        font-size: 20px;
         padding: 10px 20px;
     }
 }
 
 @media (max-width: 480px) {
     .container {
-        padding: 20px;
+        padding: 10px;
     }
 
     h1 {
-        font-size: 20px;
+        font-size: 25px;
     }
 
-    input[type="text"] {
+    input {
         width: 60px;
-        font-size: 1.2rem;
+        font-size: 20px;
     }
 
     button {
