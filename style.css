@@ -22,7 +22,7 @@ body {
 
 .container:hover {
     transform: translateY(-8px);
-    background: linear-gradient(to right, #fff493, #ffef5c,#fff6a4);
+    background: linear-gradient(to right, #fff493, #ffef5c,#fff8b6);
     box-shadow: 0 20px 40px rgb(255, 0, 0);
 }
 
@@ -34,7 +34,7 @@ h1 {
     font-family: 'Fredoka One', sans-serif;
     text-transform: uppercase;
     transition: color 0.3s ease, font-size 0.3s ease;
-    text-shadow: 0 10px 20px rgb(234, 53, 53);
+    text-shadow: 0 10px 20px rgb(255, 0, 0);
 }
 
 h1:hover {
@@ -145,13 +145,18 @@ canvas:focus {
         font-size: 20px;
         padding: 10px 20px;
     }
+    #lives {
+        font-size: 25px;
+    }
 }
 
 @media (max-width: 480px) {
     .container {
         padding: 10px;
     }
-
+    #lives {
+        font-size: 20px;
+    }
     h1 {
         font-size: 25px;
     }
