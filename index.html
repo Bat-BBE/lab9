@@ -10,6 +10,7 @@
     <div class="container">
         <h1>Hangman Тоглоом</h1>
         <p id="lives">Амь: 5</p>
+        <p id="description"></p>
         <p id="word"></p>
         <div id="wrong-letters"></div>
         <p>Үсгээ сонгоно уу:</p>
@@ -20,9 +21,29 @@
         <button onclick="resetGame()">Дахин тоглох</button>
     </div>
     <script>
-        const ugnuud = ["монгол", "тоглоом", "хөгжил", "компьютер", "сайт", "хайртай", "хөөрхөн", "аав", "ээж"];
+        
+        const ugnuud = ["ном", "мод", "хүн", "тэнгэр", "газар", "хот", "уул", "цэцэг", "сургууль", "малчин", "машин", "өндөг", "гэрэл", "загас", "ээж"];
+        const ugTailbaruud = [
+                                "Уншихад хэрэгтэй, мэдээлэл, үлгэр байдаг зүйл.",
+                                "Навчтай, их өндөр ургадаг ногоон ургамал.",
+                                "Бид бүгд, өөр өөр бодол, мэдрэмжтэй амьд биет.",
+                                "Өндөрт байдаг, үүлтэй, нар, сар гардаг хөх орон зай.",
+                                "Бидний гишгэж байгаа дэлхийн хатуу хэсэг.",
+                                "Олон байшин, машин, хүмүүс байдаг том газар.",
+                                "Өндөр, ихэнхдээ ногоон, заримдаа цасан оройтой газар.",
+                                "Үнэртэй, өнгөлөг ургамал.",
+                                "Хүүхдүүд суралцаж, тоглож, найзуудтайгаа уулздаг газар.",
+                                "Мал (хонь, ямаа гэх мэт) өсгөдөг хүн.",
+                                "Хүмүүсийг хурдан аваачдаг унаа.",
+                                "Шувууны үүрэнд байдаг, идэж болдог зууван зүйл.",
+                                "Бүдэг харанхуйг гэрэлтүүлдэг зүйл.",
+                                "Усан дотор амьдардаг амьтан.",
+                                "Чамайг төрүүлж, хайрлаж, халамжилдаг хүн."
+                            ];
 
         let ugsongoh = ugnuud[Math.floor(Math.random() * ugnuud.length)];
+        let currentIndex = ugnuud.indexOf(ugsongoh);
+
         let taasanuseg = [];
         let taagaagui = [];
         let ami = 5;
@@ -32,6 +53,11 @@
         const messageElement = document.getElementById('message');
         const letterInput = document.getElementById('letter-input');
         const hangmanCanvas = document.getElementById('hangman').getContext('2d');
+        const descriptionElement = document.getElementById('description');
+
+        function ugtailbar() {
+            descriptionElement.innerHTML = ugTailbaruud[currentIndex];
+        }
 
         function ugharuulah() {
             ugElement.innerHTML = ugsongoh.split('').map(letter => 
@@ -101,36 +127,36 @@
         }
 
         const parts = [drawHead, drawBody, drawLeftArm, drawRightArm, drawLeftLeg, drawRightLeg];
-
         function drawHangman() {
-            if (taagaagui.length > 0 && taagaagui.length <= parts.length) {
+            if(taagaagui.length > 0 && taagaagui.length <= parts.length) {
                 parts[taagaagui.length - 1]?.();
             }
         }
 
         function usegshalgah() {
-            const urt = letterInput.value.toLowerCase();
-            if (!urt) return;
+            const useg = letterInput.value.toLowerCase();
+            if(!useg) return;
 
-            if (taasanuseg.includes(urt) || taagaagui.includes(urt)) {
+            if(taasanuseg.includes(useg) || taagaagui.includes(useg)) {
                 messageElement.textContent = "Үсэг давтагдсан байна!";
                 return;
             }
 
-            if (ugsongoh.includes(urt)) {
-                taasanuseg.push(urt);
+            if(ugsongoh.includes(useg)) {
+                taasanuseg.push(useg);
             } else {
-                taagaagui.push(urt);
+                taagaagui.push(useg);
                 ami--;
             }
 
             letterInput.value = '';
             messageElement.textContent = '';
+
             ugharuulah();
             buruuuseg();
             updateLives(); 
 
-            if (!ugElement.textContent.includes('_')) {
+            if(!ugElement.textContent.includes('_')) {
                 messageElement.textContent = "Та яллаа!";
             } else if (ami === 0) {
                 messageElement.textContent = "Та ялагдлаа! Үг нь: " + ugsongoh;
@@ -142,15 +168,18 @@
             taagaagui = [];
             ami = 5;
             ugsongoh = ugnuud[Math.floor(Math.random() * ugnuud.length)];
+            currentIndex = ugnuud.indexOf(ugsongoh);
             hangmanCanvas.clearRect(0, 0, 200, 200); 
             drawBase(); 
             ugharuulah();
             buruuuseg();
-            updateLives(); 
+            updateLives();
+            ugtailbar();
         }
-
+        
         drawBase();
         ugharuulah();
+        ugtailbar();
     </script>
 </body>
 </html>
